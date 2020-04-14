@@ -11,38 +11,12 @@
  */
 (function($) {
 
-  /************ Start hard coded settings ******************/
-
-  // How long a non matching card is displayed once clicked.
-  var nonMatchingCardTime = 1000;
-
-  // Shuffle card images: How many different images are available to shuffle
-  // from?
-  var imagesAvailable = 15;
-
-  /************ End hard coded settings ******************/
-
-  // Handle clicking on settings icon
-  var settings = document.getElementById('memory--settings-icon');
-  var modal = document.getElementById('memory--settings-modal');
-  var handleOpenSettings = function (event) {
-    event.preventDefault();
-    modal.classList.toggle('show');
-  };
-  settings.addEventListener('click', handleOpenSettings);
-
   // Handle settings form submission
-  var reset = document.getElementById('memory--settings-reset');
-  var handleSettingsSubmission = function (event) {
-    event.preventDefault();
-
-    var selectWidget = document.getElementById("memory--settings-grid").valueOf();
-    var grid = selectWidget.options[selectWidget.selectedIndex].value;
+  window.handleSettingsSubmission = function (grid) {
     var gridValues = grid.split('x');
     var cards = $.initialize(Number(gridValues[0]), Number(gridValues[1]), imagesAvailable);
 
     if (cards) {
-      document.getElementById('memory--settings-modal').classList.remove('show');
       document.getElementById('memory--end-game-modal').classList.remove('show');
       document.getElementById('memory--end-game-message').innerText = "";
       document.getElementById('memory--end-game-score').innerText = "";
@@ -50,7 +24,6 @@
     }
 
   };
-  reset.addEventListener('click', handleSettingsSubmission);
 
   // Handle clicking on card
   var handleFlipCard = function (event) {
