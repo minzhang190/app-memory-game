@@ -35,6 +35,7 @@
 
     if (status.code != 0 ) {
       this.classList.toggle('clicked');
+      createjs.Sound.play('sound-' + this.value);
     }
 
     if (status.code == 3 ) {
@@ -135,6 +136,7 @@
     var back = document.createElement("a");
 
     flipContainer.index = index;
+    flipContainer.value = card.value;
     flipContainer.style.width = width;
     flipContainer.style.height = height;
     flipContainer.classList.add("flip-container");

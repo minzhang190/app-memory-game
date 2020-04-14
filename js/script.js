@@ -15,6 +15,7 @@ var dataDirectory = searchParams.get('data') || 'mmenavas';
 
 var script = document.createElement('script');
 script.src = 'data/' + dataDirectory + '/script.js';
+script.async = false;
 document.body.appendChild(script);
 
 var link = document.createElement('link');
@@ -22,7 +23,24 @@ link.rel = 'stylesheet';
 link.href = 'data/' + dataDirectory + '/style.css';
 document.head.appendChild(link);
 
-window.addEventListener('load', function(e) {
+var itemCount = 1, itemLoaded = 0;
+
+function load() {
+    if (++itemLoaded < itemCount) {
+        return;
+    }
+
     var grid = searchParams.get('grid') || '5x6';
     handleSettingsSubmission(grid);
-});
+}
+
+function loadSound(array) {
+    itemCount += array.length;
+    createjs.Sound.on('fileload', load);
+
+    array.forEach(function(path, index) {
+        createjs.Sound.registerSound('data/' + dataDirectory + '/' + path, 'sound-' + (index + 1));
+    });
+}
+
+window.addEventListener('load', load);
