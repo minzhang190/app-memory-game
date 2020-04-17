@@ -54,6 +54,7 @@
           'Score: ' + score + ' / 100';
 
       document.getElementById("memory--end-game-modal").classList.toggle('show');
+      gtag('event', 'memory-game-end', {event_category: 'app-memory-game', value: score});
     }
 
   };
